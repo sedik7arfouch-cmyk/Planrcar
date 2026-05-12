@@ -1,15 +1,19 @@
 import streamlit as st
 import google.generativeai as genai
 
-# ضع مفتاحك الذي نسخته هنا بين القوسين
-genai.configure(api_key=AIzaSyALY6w6dGvfYL7kWPTzcE4zx8VqyrbQUzk)
+api_key = "AIzaSyALY6w6dGvfYL7kWPTzcE4zx8VqyrbQUzk"
+genai.configure(api_key=api_key)
 
-st.set_page_config(page_title="PlantCare AI", page_icon="🌿")
-st.title("🌿 خبير النباتات الذكي")
+st.set_page_config(page_title="Planrcar AI", page_icon="🌿")
+st.title("🌿 خبير النباتات الذكي (Planrcar)")
 
-query = st.text_input("كيف يمكنني مساعدتك في العناية بنباتاتك؟")
+query = st.text_input("اسألني أي شيء عن نباتاتك:")
 
 if query:
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    response = model.generate_content(query)
-    st.write(response.text)
+    try:
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(query)
+        st.success("إليك الإجابة:")
+        st.info(response.text)
+    except Exception as e:
+        st.error(f"حدث خطأ: {e}")
